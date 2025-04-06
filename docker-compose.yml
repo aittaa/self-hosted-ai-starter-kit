@@ -19,6 +19,21 @@ x-n8n: &service-n8n
     - N8N_ENCRYPTION_KEY
     - N8N_USER_MANAGEMENT_JWT_SECRET
     - OLLAMA_HOST=host.docker.internal:11434
+    - N8N_HOST=${N8N_HOST}
+    - N8N_PROTOCOL=http
+    - VUE_APP_URL_BASE_API=https://${N8N_HOST}/
+    - N8N_SMTP_HOST=smtp.gmail.com
+    - N8N_SMTP_PORT=587
+    - N8N_SMTP_USER=hyunkim.main@gmail.com
+    - N8N_SMTP_PASS=ljkzqagvhrvhvabe
+    - N8N_SMTP_SENDER=hyunkim.main@gmail.com
+    - N8N_SMTP_SSL=false
+    - N8N_SMTP_TLS=true
+    - WEBHOOK_TUNNEL_URL=https://${N8N_HOST}/
+    - N8N_EDITOR_BASE_URL=https://${N8N_HOST}/
+    - WEBHOOK_URL=https://${N8N_HOST}/
+    - GENERIC_TIMEZONE=Asia/Seoul
+    - N8N_PUSH_BACKEND=websocket
   env_file:
     - .env
 
@@ -59,8 +74,8 @@ services:
     hostname: n8n
     container_name: n8n
     restart: unless-stopped
-    ports:
-      - 5678:5678
+    expose:
+      - 5678
     volumes:
       - n8n_storage:/home/node/.n8n
       - ./n8n/backup:/backup
@@ -70,6 +85,21 @@ services:
         condition: service_healthy
       n8n-import:
         condition: service_completed_successfully
+
+  nginx:
+    image: nginx:alpine
+    hostname: nginx
+    container_name: nginx
+    networks: ['demo']
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - n8n
 
   qdrant:
     image: qdrant/qdrant
