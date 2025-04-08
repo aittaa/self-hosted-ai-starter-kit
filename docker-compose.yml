@@ -25,7 +25,7 @@ x-n8n: &service-n8n
     - N8N_SMTP_HOST=smtp.gmail.com
     - N8N_SMTP_PORT=587
     - N8N_SMTP_USER=hyunkim.main@gmail.com
-    - N8N_SMTP_PASS=ljkzqagvhrvhvabe
+    - N8N_SMTP_PASS=${N8N_SMTP_PASS}
     - N8N_SMTP_SENDER=hyunkim.main@gmail.com
     - N8N_SMTP_SSL=false
     - N8N_SMTP_TLS=true
