@@ -6,7 +6,7 @@ N8N_ENCRYPTION_KEY=super-secret-key
 N8N_USER_MANAGEMENT_JWT_SECRET=even-more-secret
 N8N_DEFAULT_BINARY_DATA_MODE=filesystem
 N8N_HOST=hyeonkim.tplinkdns.com
-
+N8N_SMTP_PASS=n8n-smtp-pass
 
 
 # # 두 개의 강력한 키 생성
